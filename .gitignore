@@ -12,6 +12,9 @@ data/
 *.sqlite-shm
 *.sqlite-wal
 
+# Sprites (download with: npm run download-sprites)
+public/sprites/
+
 # Logs
 *.log
 npm-debug.log*
@@ -26,11 +29,13 @@ Thumbs.db
 *.swp
 *.swo
 
+# Claude Code local settings
+.claude/
+
 # Environment
 .env
 .env.local
 
 # Electron
 *.asar
-poke calulator.rar
-poke calulator.rar
+*.rar
