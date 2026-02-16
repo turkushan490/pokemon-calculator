@@ -1,0 +1,3 @@
+@echo off
+echo Starting Pokemon Battle Simulator...
+npm start
