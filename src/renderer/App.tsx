@@ -96,15 +96,50 @@ const App: React.FC = () => {
           {activePage === 'home' && (
             <div className="max-w-4xl mx-auto">
               <div className="bg-white rounded-lg shadow-lg p-8">
+                <div className="flex items-center gap-6 mb-6">
+                  <img
+                    src="poke://sprites/static/25.png"
+                    alt="Pikachu"
+                    className="w-32 h-32"
+                  />
+                  <img
+                    src="poke://sprites/static/6.png"
+                    alt="Charizard"
+                    className="w-32 h-32"
+                  />
+                  <img
+                    src="poke://sprites/static/9.png"
+                    alt="Blastoise"
+                    className="w-32 h-32"
+                  />
+                  <img
+                    src="poke://sprites/static/3.png"
+                    alt="Venusaur"
+                    className="w-32 h-32"
+                  />
+                </div>
                 <h2 className="text-3xl font-bold mb-4">Pokemon Battle Simulator</h2>
                 <p className="text-gray-600 mb-6">
-                  Welcome to the Pokemon Battle Simulator!
+                  Welcome to the Pokemon Battle Simulator! Build teams, run battles, and analyze results with AI-powered predictions.
                 </p>
-                <img
-                  src="https://i.ytimg.com/vi/QkSGqnQRfJE/maxresdefault.jpg"
-                  alt="Pokemon"
-                  className="w-full rounded-lg shadow-md"
-                />
+                <div className="grid grid-cols-2 gap-4 mt-8">
+                  <div className="bg-blue-50 rounded-lg p-4">
+                    <h3 className="font-bold text-blue-800 mb-2">Team Builder</h3>
+                    <p className="text-sm text-gray-600">Create custom teams with IVs, EVs, movesets, and items.</p>
+                  </div>
+                  <div className="bg-green-50 rounded-lg p-4">
+                    <h3 className="font-bold text-green-800 mb-2">Battle Simulator</h3>
+                    <p className="text-sm text-gray-600">Run simulations using the @pkmn/sim battle engine.</p>
+                  </div>
+                  <div className="bg-purple-50 rounded-lg p-4">
+                    <h3 className="font-bold text-purple-800 mb-2">AI Analytics</h3>
+                    <p className="text-sm text-gray-600">Track win rates and effectiveness over time.</p>
+                  </div>
+                  <div className="bg-orange-50 rounded-lg p-4">
+                    <h3 className="font-bold text-orange-800 mb-2">Pokemon Stats</h3>
+                    <p className="text-sm text-gray-600">View detailed statistics and base stats.</p>
+                  </div>
+                </div>
               </div>
             </div>
           )}
