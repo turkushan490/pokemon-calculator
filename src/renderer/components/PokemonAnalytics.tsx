@@ -152,16 +152,9 @@ export const PokemonAnalytics: React.FC = () => {
                     </div>
                   )}
                   <img
-                    src={`poke://sprites/animated/${pokemon.national_dex_number}.gif`}
+                    src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.national_dex_number}.png`}
                     alt={pokemon.name}
                     className="w-16 h-16"
-                    onError={(e) => {
-                      if (e.currentTarget.src.includes('animated/')) {
-                        e.currentTarget.src = `poke://sprites/static/${pokemon.national_dex_number}.png`;
-                      } else if (e.currentTarget.src.includes('static/')) {
-                        e.currentTarget.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.national_dex_number}.png`;
-                      }
-                    }}
                   />
                   <div className="flex-1">
                     <div className="font-semibold capitalize">
@@ -213,16 +206,9 @@ export const PokemonAnalytics: React.FC = () => {
             <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg p-6">
               <div className="flex justify-between items-start gap-4">
                 <img
-                  src={`poke://sprites/animated/${selectedPokemon.national_dex_number}.gif`}
+                  src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${selectedPokemon.national_dex_number}.png`}
                   alt={selectedPokemon.name}
                   className="w-24 h-24 bg-white bg-opacity-20 rounded-lg p-2"
-                  onError={(e) => {
-                    if (e.currentTarget.src.includes('animated/')) {
-                      e.currentTarget.src = `poke://sprites/static/${selectedPokemon.national_dex_number}.png`;
-                    } else if (e.currentTarget.src.includes('static/')) {
-                      e.currentTarget.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${selectedPokemon.national_dex_number}.png`;
-                    }
-                  }}
                 />
                 <div className="flex-1">
                   <h2 className="text-3xl font-bold capitalize">{selectedPokemon.name}</h2>

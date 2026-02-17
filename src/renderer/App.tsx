@@ -98,22 +98,22 @@ const App: React.FC = () => {
               <div className="bg-white rounded-lg shadow-lg p-8">
                 <div className="flex items-center gap-6 mb-6">
                   <img
-                    src="poke://sprites/static/25.png"
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/25.png"
                     alt="Pikachu"
                     className="w-32 h-32"
                   />
                   <img
-                    src="poke://sprites/static/6.png"
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/6.png"
                     alt="Charizard"
                     className="w-32 h-32"
                   />
                   <img
-                    src="poke://sprites/static/9.png"
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/9.png"
                     alt="Blastoise"
                     className="w-32 h-32"
                   />
                   <img
-                    src="poke://sprites/static/3.png"
+                    src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/3.png"
                     alt="Venusaur"
                     className="w-32 h-32"
                   />
