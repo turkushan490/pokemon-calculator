@@ -22,10 +22,24 @@ echo [OK] Node.js found
 node --version
 echo.
 
+:: Kill processes using port 9000
+echo [*] Checking port 9000...
+for /f "tokens=5" %%a in ('netstat -aon ^| find ":9000" ^| find "LISTENING"') do (
+    echo [*] Killing process %%a using port 9000...
+    taskkill /F /PID %%a >nul 2>&1
+)
+timeout /t 1 >nul
+
+:: Kill any Electron/node processes
+echo [*] Stopping any running instances...
+taskkill /F /IM electron.exe >nul 2>&1
+taskkill /F /IM node.exe >nul 2>&1
+timeout /t 1 >nul
+echo.
+
 :: Update from Git (only if .git exists)
 if exist ".git" (
     echo [*] Updating from GitHub...
-    git fetch origin
     git pull origin master
     if errorlevel 1 (
         echo [WARN] Could not update (continuing anyway...)
@@ -45,12 +59,6 @@ if not exist "node_modules" (
     echo [OK] Dependencies installed
     echo.
 )
-
-:: Kill old processes
-echo [*] Stopping any running instances...
-taskkill /F /IM electron.exe >nul 2>&1
-timeout /t 2 >nul
-echo.
 
 :: Start app
 echo =====================================
