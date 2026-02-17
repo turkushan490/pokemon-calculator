@@ -131,13 +131,13 @@ export const TeamDetailsModal: React.FC<TeamDetailsModalProps> = ({ teamId, onCl
                     <div className="flex justify-between items-start gap-3">
                       {pokemon && (
                         <img
-                          src={`/sprites/animated/${pokemon.national_dex_number}.gif`}
+                          src={`poke://sprites/animated/${pokemon.national_dex_number}.gif`}
                           alt={pokemon.name}
                           className="w-20 h-20"
                           onError={(e) => {
-                            if (e.currentTarget.src.includes('/sprites/animated/')) {
-                              e.currentTarget.src = `/sprites/static/${pokemon.national_dex_number}.png`;
-                            } else if (e.currentTarget.src.includes('/sprites/static/')) {
+                            if (e.currentTarget.src.includes('animated/')) {
+                              e.currentTarget.src = `poke://sprites/static/${pokemon.national_dex_number}.png`;
+                            } else if (e.currentTarget.src.includes('static/')) {
                               e.currentTarget.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.national_dex_number}.png`;
                             }
                           }}

@@ -100,6 +100,11 @@ const App: React.FC = () => {
                 <p className="text-gray-600 mb-6">
                   Welcome to the Pokemon Battle Simulator!
                 </p>
+                <img
+                  src="https://i.ytimg.com/vi/QkSGqnQRfJE/maxresdefault.jpg"
+                  alt="Pokemon"
+                  className="w-full rounded-lg shadow-md"
+                />
               </div>
             </div>
           )}

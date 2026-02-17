@@ -1,6 +1,7 @@
-import { app, BrowserWindow, protocol } from 'electron';
+import { app, BrowserWindow, protocol, net } from 'electron';
 import path from 'path';
 import fs from 'fs';
+import { pathToFileURL } from 'url';
 import { DatabaseSchema } from './database/schema';
 import { TeamRepository } from './database/repositories/TeamRepository';
 import { PokemonRepository } from './database/repositories/PokemonRepository';
@@ -9,6 +10,11 @@ import { PokeAPIClient } from './data/PokeAPIClient';
 import { DataSync } from './data/DataSync';
 import { SimulationManager } from './simulation/SimulationManager';
 import { setupIPCHandlers } from './ipc/handlers';
+
+// Register custom protocol for serving local sprites (must be before app.ready)
+protocol.registerSchemesAsPrivileged([
+  { scheme: 'poke', privileges: { standard: true, secure: true, supportFetchAPI: true } }
+]);
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -83,23 +89,16 @@ const createWindow = async (): Promise<void> => {
   });
 };
 
-// Register protocol to serve local files
+// Serve local sprite files via custom 'poke' protocol
 app.whenReady().then(() => {
-  // Intercept requests to serve sprites from public folder
-  protocol.interceptFileProtocol('http', (request, callback) => {
-    const url = request.url.replace('http://localhost:9000/', '');
-
-    // Check if requesting a sprite
-    if (url.startsWith('sprites/')) {
-      const spritePath = path.join(__dirname, '../../public', url);
-      if (fs.existsSync(spritePath)) {
-        callback({ path: spritePath });
-        return;
-      }
+  protocol.handle('poke', (request) => {
+    const url = new URL(request.url);
+    // poke://sprites/animated/25.gif -> public/sprites/animated/25.gif
+    const filePath = path.join(__dirname, '../../public', url.hostname, url.pathname);
+    if (fs.existsSync(filePath)) {
+      return net.fetch(pathToFileURL(filePath).href);
     }
-
-    // Default: let webpack dev server handle it
-    callback({ url: request.url });
+    return new Response('Not found', { status: 404 });
   });
 
   createWindow();

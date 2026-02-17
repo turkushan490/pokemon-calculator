@@ -28,6 +28,9 @@ module.exports = {
     {
       name: '@electron-forge/plugin-webpack',
       config: {
+        devServer: {
+          host: 'localhost',
+        },
         mainConfig: './webpack.main.config.js',
         renderer: {
           config: './webpack.renderer.config.js',

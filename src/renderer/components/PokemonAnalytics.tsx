@@ -152,15 +152,13 @@ export const PokemonAnalytics: React.FC = () => {
                     </div>
                   )}
                   <img
-                    src={`/sprites/animated/${pokemon.national_dex_number}.gif`}
+                    src={`poke://sprites/animated/${pokemon.national_dex_number}.gif`}
                     alt={pokemon.name}
                     className="w-16 h-16"
                     onError={(e) => {
-                      // Fallback to static sprite if animated not available
-                      if (e.currentTarget.src.includes('/sprites/animated/')) {
-                        e.currentTarget.src = `/sprites/static/${pokemon.national_dex_number}.png`;
-                      } else if (e.currentTarget.src.includes('/sprites/static/')) {
-                        // Final fallback to GitHub
+                      if (e.currentTarget.src.includes('animated/')) {
+                        e.currentTarget.src = `poke://sprites/static/${pokemon.national_dex_number}.png`;
+                      } else if (e.currentTarget.src.includes('static/')) {
                         e.currentTarget.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${pokemon.national_dex_number}.png`;
                       }
                     }}
@@ -215,13 +213,13 @@ export const PokemonAnalytics: React.FC = () => {
             <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg p-6">
               <div className="flex justify-between items-start gap-4">
                 <img
-                  src={`/sprites/animated/${selectedPokemon.national_dex_number}.gif`}
+                  src={`poke://sprites/animated/${selectedPokemon.national_dex_number}.gif`}
                   alt={selectedPokemon.name}
                   className="w-24 h-24 bg-white bg-opacity-20 rounded-lg p-2"
                   onError={(e) => {
-                    if (e.currentTarget.src.includes('/sprites/animated/')) {
-                      e.currentTarget.src = `/sprites/static/${selectedPokemon.national_dex_number}.png`;
-                    } else if (e.currentTarget.src.includes('/sprites/static/')) {
+                    if (e.currentTarget.src.includes('animated/')) {
+                      e.currentTarget.src = `poke://sprites/static/${selectedPokemon.national_dex_number}.png`;
+                    } else if (e.currentTarget.src.includes('static/')) {
                       e.currentTarget.src = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${selectedPokemon.national_dex_number}.png`;
                     }
                   }}

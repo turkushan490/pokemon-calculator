@@ -75,7 +75,7 @@ export const SPRITE_FORMATS: Record<SpriteFormat, SpriteConfig> = {
  */
 export function getSpriteUrl(nationalDexNumber: number, format: SpriteFormat = 'animated'): string {
   const config = SPRITE_FORMATS[format];
-  return `/sprites/${config.path}/${nationalDexNumber}.${config.extension}`;
+  return `poke://sprites/${config.path}/${nationalDexNumber}.${config.extension}`;
 }
 
 /**
@@ -131,9 +131,9 @@ export function handleSpriteError(
   const img = event.currentTarget;
 
   // Try fallback chain: animated -> static -> GitHub CDN
-  if (img.src.includes('/sprites/animated/')) {
+  if (img.src.includes('animated/')) {
     img.src = getSpriteUrl(nationalDexNumber, 'static');
-  } else if (img.src.includes('/sprites/static/')) {
+  } else if (img.src.includes('static/')) {
     img.src = getGitHubSpriteUrl(nationalDexNumber, 'static');
   }
   // If GitHub CDN also fails, just let it show broken image
