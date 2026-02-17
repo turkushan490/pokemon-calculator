@@ -1,27 +1,6 @@
 # Pokemon Battle Simulator
 
-![Home Page](docs/screenshots/home.png)
-
 A desktop Pokemon battle simulator with AI-powered move predictions, team building, and battle analytics. Built with Electron, React, and TypeScript.
-
-## Screenshots
-
-### Home Page
-![Home Page](docs/screenshots/home.png)
-
-### Team Builder
-![Team Builder](docs/screenshots/team-builder.png)
-![Team Builder - Edit Pokemon](docs/screenshots/team-builder-edit.png)
-
-### Battle Simulator
-![Battle Simulator](docs/screenshots/simulation.png)
-
-### Results Dashboard
-![Results Dashboard](docs/screenshots/results.png)
-
-### Pokemon Analytics
-![Pokemon Analytics](docs/screenshots/pokemon-analytics.png)
-![Pokemon Analytics - Detail](docs/screenshots/pokemon-analytics-detail.png)
 
 ## Features
 
