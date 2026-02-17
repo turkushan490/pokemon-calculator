@@ -93,7 +93,10 @@ const createWindow = async (): Promise<void> => {
 app.whenReady().then(() => {
   protocol.handle('poke', (request) => {
     const url = new URL(request.url);
-    // poke://sprites/animated/25.gif -> .webpack/renderer/main_window/sprites/animated/25.gif
+    // poke://sprites/animated/25.gif
+    // URL structure: hostname = 'sprites', pathname = '/animated/25.gif'
+    const requestPath = url.pathname.startsWith('/') ? url.pathname.slice(1) : url.pathname;
+
     // In production, use resources path; in dev, use webpack output path
     let spritesPath: string;
 
@@ -105,7 +108,8 @@ app.whenReady().then(() => {
       spritesPath = path.join(__dirname, '../renderer/main_window/sprites');
     }
 
-    const filePath = path.join(spritesPath, url.pathname);
+    const filePath = path.join(spritesPath, requestPath);
+
     if (fs.existsSync(filePath)) {
       return net.fetch(pathToFileURL(filePath).href);
     }
