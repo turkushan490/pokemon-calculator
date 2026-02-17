@@ -93,8 +93,19 @@ const createWindow = async (): Promise<void> => {
 app.whenReady().then(() => {
   protocol.handle('poke', (request) => {
     const url = new URL(request.url);
-    // poke://sprites/animated/25.gif -> public/sprites/animated/25.gif
-    const filePath = path.join(__dirname, '../../public', url.hostname, url.pathname);
+    // poke://sprites/animated/25.gif -> .webpack/renderer/main_window/sprites/animated/25.gif
+    // In production, use resources path; in dev, use webpack output path
+    let spritesPath: string;
+
+    if (app.isPackaged) {
+      // Production: sprites are in the app's resources folder
+      spritesPath = path.join(process.resourcesPath, 'sprites');
+    } else {
+      // Development: sprites are in .webpack/renderer/main_window/sprites
+      spritesPath = path.join(__dirname, '../renderer/main_window/sprites');
+    }
+
+    const filePath = path.join(spritesPath, url.pathname);
     if (fs.existsSync(filePath)) {
       return net.fetch(pathToFileURL(filePath).href);
     }
