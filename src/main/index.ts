@@ -29,33 +29,49 @@ let dataSync: DataSync;
 let simulationManager: SimulationManager;
 
 const initializeApp = async (): Promise<void> => {
-  // Initialize database
-  dbSchema = new DatabaseSchema();
-  const db = dbSchema.getDatabase();
+  try {
+    console.log('[App] Initializing...');
 
-  // Initialize repositories
-  teamRepo = new TeamRepository(db);
-  pokemonRepo = new PokemonRepository(db);
+    // Initialize database
+    console.log('[App] Creating database schema...');
+    dbSchema = new DatabaseSchema();
+    const db = dbSchema.getDatabase();
+    console.log('[App] Database initialized');
 
-  // Initialize data sync
-  const cache = new CacheManager();
-  const apiClient = new PokeAPIClient(cache);
-  dataSync = new DataSync(apiClient, dbSchema);
+    // Initialize repositories
+    console.log('[App] Initializing repositories...');
+    teamRepo = new TeamRepository(db);
+    pokemonRepo = new PokemonRepository(db);
 
-  // Initialize simulation manager
-  simulationManager = new SimulationManager(db);
+    // Initialize data sync
+    console.log('[App] Initializing data sync...');
+    const cache = new CacheManager();
+    const apiClient = new PokeAPIClient(cache);
+    dataSync = new DataSync(apiClient, dbSchema);
 
-  // Setup IPC handlers
-  setupIPCHandlers(teamRepo, pokemonRepo, dataSync, simulationManager);
+    // Initialize simulation manager
+    console.log('[App] Initializing simulation manager...');
+    simulationManager = new SimulationManager(db);
 
-  // Check if we need to sync data
-  const needsSync = await dataSync.needsUpdate();
-  if (needsSync) {
-    console.log('First launch detected, syncing Pokemon data...');
-    mainWindow?.webContents.send('sync:started');
-    const report = await dataSync.syncAllData();
-    console.log('Sync complete:', report);
-    mainWindow?.webContents.send('sync:completed', report);
+    // Setup IPC handlers
+    console.log('[App] Setting up IPC handlers...');
+    setupIPCHandlers(teamRepo, pokemonRepo, dataSync, simulationManager);
+    console.log('[App] IPC handlers ready');
+
+    // Check if we need to sync data
+    const needsSync = await dataSync.needsUpdate();
+    if (needsSync) {
+      console.log('First launch detected, syncing Pokemon data...');
+      mainWindow?.webContents.send('sync:started');
+      const report = await dataSync.syncAllData();
+      console.log('Sync complete:', report);
+      mainWindow?.webContents.send('sync:completed', report);
+    }
+
+    console.log('[App] Initialization complete');
+  } catch (error) {
+    console.error('[App] FATAL ERROR during initialization:', error);
+    throw error;
   }
 };
 
