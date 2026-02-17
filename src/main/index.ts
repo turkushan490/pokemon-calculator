@@ -104,19 +104,42 @@ app.whenReady().then(() => {
       // Production: sprites are in the app's resources folder
       spritesPath = path.join(process.resourcesPath, 'sprites');
     } else {
-      // Development: __dirname is .webpack/main, go up to .webpack then to renderer/main_window/sprites
-      spritesPath = path.join(__dirname, '..', 'renderer', 'main_window', 'sprites');
+      // Development: Try multiple possible paths
+      const possiblePaths = [
+        // Standard webpack output path
+        path.join(__dirname, '..', 'renderer', 'main_window', 'sprites'),
+        // Alternative path if webpack structure is different
+        path.join(__dirname, '..', '..', 'renderer', 'main_window', 'sprites'),
+        // Fallback to public folder
+        path.join(process.cwd(), 'public', 'sprites'),
+      ];
+
+      // Find the first path that exists
+      for (const testPath of possiblePaths) {
+        if (fs.existsSync(testPath)) {
+          spritesPath = testPath;
+          break;
+        }
+      }
+
+      // If none found, use the first one as default
+      if (!spritesPath) {
+        spritesPath = possiblePaths[0];
+      }
     }
 
     const filePath = path.join(spritesPath, requestPath);
 
-    console.log('[poke://] Request:', request.url, '-> File path:', filePath);
+    console.log('[poke://] Request:', request.url);
+    console.log('[poke://] Sprites path:', spritesPath);
+    console.log('[poke://] Looking for:', filePath);
+    console.log('[poke://] File exists:', fs.existsSync(filePath));
 
     if (fs.existsSync(filePath)) {
-      console.log('[poke://] Serving file:', filePath);
+      console.log('[poke://] ✓ Serving file:', filePath);
       return net.fetch(pathToFileURL(filePath).href);
     }
-    console.log('[poke://] File not found:', filePath);
+    console.log('[poke://] ✗ File not found:', filePath);
     return new Response('Not found', { status: 404 });
   });
 
